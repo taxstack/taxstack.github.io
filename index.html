@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TaxStack — Open-Source, Private, Offline Tax Software for Tax Season</title>
+<meta name="description" content="TaxStack is the open-source, local-first tax platform: tax rules encoded as open data (OKF), computed deterministically on your machine, explained by a local AI that never does arithmetic. Free, private, offline — get ready for tax season without surrendering your data.">
+<meta name="keywords" content="open source tax software, private tax filing, offline tax calculator, local AI tax, income tax open source, tax rules as data, OKF, free tax software, file taxes privately, tax privacy, tax season 2026, file taxes 2026, tax filing season, tax return, ITR filing India, 1040">
+<meta name="author" content="TaxStack">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://taxstack.github.io/">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="TaxStack">
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="TaxStack — Open-Source, Private, Offline Tax Software">
+<meta property="og:description" content="Tax rules as open data, computed on your own machine, explained in plain language. Open source · offline by design · Apache-2.0. Be ready for tax season.">
+<meta property="og:url" content="https://taxstack.github.io/">
+<!-- TODO: add og:image (1200x630 PNG) once we have a branded share card -->
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "TaxStack",
+  "applicationCategory": "FinanceApplication",
+  "operatingSystem": "Windows, macOS, Linux",
+  "description": "Open-source, local-first tax platform — built in the open ahead of tax season. Tax rules encoded as open data (OKF), computed deterministically on your machine, explained by a local AI that never does arithmetic.",
+  "url": "https://taxstack.github.io/",
+  "license": "https://www.apache.org/licenses/LICENSE-2.0",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "author": { "@type": "Organization", "name": "TaxStack", "url": "https://github.com/taxstack" }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    { "@type": "Question", "name": "Is there an app I can download yet?", "acceptedAnswer": { "@type": "Answer", "text": "No — TaxStack is in vision stage (pre-RFC): we're publishing the vision, architecture, and working rule packs first. Informal feedback is welcome now; a formal RFC may follow if the response justifies it. Roadmap: feedback → OKF spec → reference rule pack → engine → desktop app." } },
+    { "@type": "Question", "name": "Will TaxStack be ready for this tax season?", "acceptedAnswer": { "@type": "Answer", "text": "Honestly, a full app this season is unlikely — we're in vision stage. But tax season is exactly why the timing matters: it's when the pain is sharpest, and getting involved now is what shapes what ships first." } },
+    { "@type": "Question", "name": "What is OKF, in one sentence?", "acceptedAnswer": { "@type": "Answer", "text": "The Open Knowledge Format — a spec for encoding a jurisdiction's tax law as versioned, human-readable data (rates, thresholds, formulas, form mappings, worked tests) instead of hiding it inside code." } },
+    { "@type": "Question", "name": "Will the AI do my taxes?", "acceptedAnswer": { "@type": "Answer", "text": "No — that's the iron rule. The local AI explains and cites sources; every number comes from the deterministic engine. With the AI off, the app still works." } },
+    { "@type": "Question", "name": "Is my data really safe?", "acceptedAnswer": { "@type": "Answer", "text": "Zero financial data leaves your machine — no cloud account, no telemetry, no external API calls. AI runs on a local model via an on-device runtime (under evaluation — Ollama, llama.cpp, or equivalent), with encrypted local storage. A published threat model details the protections." } },
+    { "@type": "Question", "name": "Do I need to know how to code to help?", "acceptedAnswer": { "@type": "Answer", "text": "No. If you can read a tax manual, you can contribute — reviewing rule packs, checking worked examples, correcting where our model of the law is wrong. Engineers are equally welcome." } },
+    { "@type": "Question", "name": "Which countries will be supported?", "acceptedAnswer": { "@type": "Answer", "text": "The design is jurisdiction-agnostic — each country's rules are a versioned pack authored by its own community. Sample packs exist for US federal and India." } },
+    { "@type": "Question", "name": "Is this a replacement for tax professionals?", "acceptedAnswer": { "@type": "Answer", "text": "No — explicitly not. TaxStack is an educational and assistive tool. Tax professionals are partners: they author and review the rules the engine runs on." } },
+    { "@type": "Question", "name": "Why should I trust a pre-code project?", "acceptedAnswer": { "@type": "Answer", "text": "Everything is published before building: the manifesto, architecture risks, a threat model, and working sample packs with verifiable test cases. Trust is designed in — golden tests, versioned packs, citations, and corrections shipped as new versions." } }
+  ]
+}
+</script>
+<style>
+  :root {
+    --bg: #0d1117;
+    --surface: #161b22;
+    --border: #30363d;
+    --text: #e6edf3;
+    --muted: #8b949e;
+    --accent: #58a6ff;
+    --green: #3fb950;
+    --orange: #d29922;
+    --purple: #bc8cff;
+    --header-bg: rgba(13,17,23,0.9);
+  }
+  @media (prefers-color-scheme: light) {
+    :root {
+      --bg: #ffffff;
+      --surface: #f6f8fa;
+      --border: #d0d7de;
+      --text: #1f2328;
+      --muted: #59636e;
+      --accent: #0969da;
+      --green: #1a7f37;
+      --orange: #9a6700;
+      --purple: #8250df;
+      --header-bg: rgba(255,255,255,0.9);
+    }
+    .badge.orange { border-color: #d4a72c; }
+    .badge.green { border-color: #4ac26b; }
+    .badge.purple { border-color: #a371f7; }
+    .callout { background: rgba(210,153,34,0.08); }
+    .compare .card.bad { border-color: #d99b9b; }
+    .compare .card.bad h3 { color: #cf222e; }
+    .compare .card.good { border-color: #4ac26b; }
+    .compare .card.good h3 { color: #1a7f37; }
+    .iron { border-left-color: var(--purple); }
+    .iron b { color: var(--purple); }
+    .btn.primary { color: #ffffff; }
+    details.faq summary::after { color: var(--accent); }
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.65;
+  }
+  .wrap { max-width: 860px; margin: 0 auto; padding: 0 24px; }
+
+  header {
+    position: sticky; top: 0; z-index: 10;
+    background: var(--header-bg);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+    padding: 10px 0;
+  }
+  header .wrap { display: flex; justify-content: space-between; align-items: center; }
+  .logo { font-weight: 700; font-size: 19px; letter-spacing: -0.5px; text-decoration: none; color: var(--text); display: inline-flex; align-items: center; gap: 8px; }
+  .logo svg { display: block; }
+  .logo .stack { color: var(--accent); }
+  nav a {
+    color: var(--text); text-decoration: none; font-weight: 500;
+    margin-left: 18px; font-size: 14px;
+  }
+  nav a:hover { color: var(--accent); }
+
+  @media (max-width: 640px) {
+    header .wrap { flex-wrap: wrap; row-gap: 6px; }
+    nav { display: flex; flex-wrap: wrap; gap: 2px 14px; width: 100%; justify-content: center; padding-bottom: 4px; }
+    nav a { margin-left: 0; font-size: 13px; }
+    .hero { padding: 48px 0 36px; }
+    .hero h1 { font-size: 32px; letter-spacing: -1px; }
+    .hero p.tagline { font-size: 17px; }
+    .hero .brick, .hero svg { width: 56px; height: 56px; }
+    section { padding: 32px 0; }
+    h2 { font-size: 23px; }
+    .btn { padding: 12px 20px; font-size: 14px; }
+    .grid, .roles, .packs, .compare { grid-template-columns: 1fr; }
+    .compare .card.bad, .compare .card.good { order: initial; }
+    footer { padding: 28px 0; }
+  }
+
+  .hero { text-align: center; padding: 48px 0 48px; }
+  .hero h1 { font-size: 46px; letter-spacing: -1.5px; margin: 16px 0 14px; line-height: 1.15; }
+  .hero p.tagline {
+    font-size: 20px; color: var(--muted);
+    max-width: 660px; margin: 0 auto 30px; font-style: italic;
+  }
+  .badges { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+  .badge {
+    font-size: 12.5px; padding: 5px 12px; border-radius: 20px;
+    border: 1px solid var(--border); background: var(--surface);
+  }
+  .badge.orange { color: var(--orange); border-color: #6e4f10; }
+  .badge.green { color: var(--green); border-color: #1f6f33; }
+  .badge.purple { color: var(--purple); border-color: #5b3d8f; }
+  .cta { display: flex; gap: 14px; justify-content: center; margin-top: 28px; flex-wrap: wrap; }
+  .btn {
+    display: inline-block; padding: 13px 28px; border-radius: 8px;
+    font-weight: 600; font-size: 15px; text-decoration: none;
+  }
+  .btn.primary { background: var(--accent); color: #0d1117; }
+  .btn.ghost { border: 1px solid var(--border); color: var(--text); }
+  .btn.ghost:hover { border-color: var(--accent); }
+
+  section { padding: 40px 0; border-top: 1px solid var(--border); }
+  h2 { font-size: 26px; letter-spacing: -0.5px; margin-bottom: 8px; }
+  .sub { color: var(--muted); margin-bottom: 26px; max-width: 660px; font-size: 16px; }
+
+  .prose p { margin-bottom: 12px; font-size: 15.5px; }
+  .prose strong { color: var(--text); }
+
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px; }
+  .card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 10px; padding: 20px;
+  }
+  .card .icon { font-size: 26px; margin-bottom: 10px; }
+  .card h3 { font-size: 16.5px; margin-bottom: 8px; }
+  .card p { font-size: 14px; color: var(--muted); }
+
+  .compare { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 8px; }
+  @media (max-width: 640px) { .compare { grid-template-columns: 1fr; } }
+  .compare .card.bad { border-color: #6e3030; }
+  .compare .card.bad h3 { color: #f85149; }
+  .compare .card.good { border-color: #1f6f33; }
+  .compare .card.good h3 { color: var(--green); }
+  .compare ul { padding-left: 18px; font-size: 14px; color: var(--muted); }
+  .compare li { margin-bottom: 7px; }
+
+  .iron {
+    background: var(--surface); border: 1px solid var(--border);
+    border-left: 3px solid var(--purple); border-radius: 8px;
+    padding: 18px 22px; margin-bottom: 12px;
+  }
+  .iron b { color: var(--purple); }
+  .iron p { color: var(--muted); font-size: 14.5px; margin-top: 4px; }
+
+  .callout {
+    border: 1px solid #6e4f10; background: rgba(210,153,34,0.08);
+    border-radius: 10px; padding: 20px 22px; margin: 22px 0; font-size: 14.5px;
+  }
+  .callout b { color: var(--orange); }
+
+  .packs { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 640px) { .packs { grid-template-columns: 1fr; } }
+  .pack {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 10px; padding: 20px;
+  }
+  .pack h3 { font-size: 16.5px; margin-bottom: 8px; }
+  .pack p { font-size: 14px; color: var(--muted); margin-bottom: 12px; }
+  .pack a { color: var(--accent); font-size: 13.5px; text-decoration: none; margin-right: 14px; }
+  .pack a:hover { text-decoration: underline; }
+
+  .roles { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 16px; }
+  .role { border: 1px solid var(--border); border-radius: 10px; padding: 20px 16px; text-align: center; }
+  .role .emoji { font-size: 30px; }
+  .role h3 { font-size: 15.5px; margin: 12px 0 8px; }
+  .role p { font-size: 13.5px; color: var(--muted); }
+
+  details.faq {
+    border: 1px solid var(--border); border-radius: 10px;
+    background: var(--surface); margin-bottom: 10px; overflow: hidden;
+  }
+  details.faq summary {
+    cursor: pointer; padding: 14px 20px; font-weight: 600; font-size: 15px;
+    list-style: none; display: flex; justify-content: space-between; align-items: center;
+  }
+  details.faq summary::after { content: "+"; color: var(--accent); font-size: 20px; font-weight: 400; }
+  details.faq[open] summary::after { content: "–"; }
+  details.faq .faq-body { padding: 0 20px 16px; color: var(--muted); font-size: 14.5px; }
+  details.faq .faq-body p { margin-bottom: 10px; }
+  details.faq .faq-body a { color: var(--accent); }
+
+  footer {
+    border-top: 1px solid var(--border); padding: 36px 0;
+    color: var(--muted); font-size: 13px; text-align: center;
+  }
+  footer a { color: var(--accent); text-decoration: none; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <a class="logo" href="#top"><svg width="24" height="24" viewBox="0 0 64 64" fill="none" aria-hidden="true"><rect x="10" y="38" width="44" height="10" rx="2" fill="#58a6ff" opacity="0.45"/><rect x="14" y="26" width="44" height="10" rx="2" fill="#58a6ff" opacity="0.7"/><rect x="18" y="14" width="44" height="10" rx="2" fill="#58a6ff"/></svg><span>Tax<span class="stack">Stack</span></span></a>
+    <nav>
+      <a href="#problem">Problem statement</a>
+      <a href="#how">How it works</a>
+      <a href="#rules">The rules</a>
+      <a href="#join">Get involved</a>
+      <a href="#faq">FAQ</a>
+      <a href="https://github.com/taxstack/taxstack">GitHub ↗</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ============ HERO ============ -->
+<div class="hero" id="top">
+  <div class="wrap">
+    <svg width="72" height="72" viewBox="0 0 64 64" fill="none" aria-hidden="true" style="margin-bottom:2px;"><rect x="10" y="38" width="44" height="10" rx="2" fill="#58a6ff" opacity="0.45"/><rect x="14" y="26" width="44" height="10" rx="2" fill="#58a6ff" opacity="0.7"/><rect x="18" y="14" width="44" height="10" rx="2" fill="#58a6ff"/></svg>
+    <h1>Your taxes, on your machine,<br>explained in plain language</h1>
+    <p class="tagline">Tax knowledge shouldn't be a paid product — it should be open data, computed on your own computer, explained by an AI that never does the math.</p>
+    <div class="badges">
+      <span class="badge orange">Vision stage — design preview, no app yet</span>
+      <span class="badge green">Tax season is coming — get in early</span>
+      <span class="badge green">100% offline by design</span>
+      <span class="badge purple">Open source · Apache-2.0</span>
+    </div>
+    <div class="cta">
+      <a class="btn ghost" href="https://github.com/taxstack">Explore the project</a>
+      <a class="btn ghost" href="#how">How it works</a>
+    </div>
+  </div>
+</div>
+
+<!-- ============ PROBLEM ============ -->
+<section id="problem">
+  <div class="wrap prose">
+    <h2>Problem statement</h2>
+    <p class="sub">Filing your own taxes should be possible without surrendering your financial life to a cloud.</p>
+    <p>Every year, millions of people face the same choice: navigate dense government manuals alone, or hand their most sensitive financial data — income, deductions, identity numbers — to a corporation's servers. For many, professional guidance is simply out of reach.</p>
+    <p>Tax software isn't really selling you software. It's selling <strong>convenience at the price of your data</strong>: upsells at every step, dark patterns, and your financial profile monetized on someone else's infrastructure.</p>
+    <p>Meanwhile, the rules themselves — the actual tax law — are locked inside proprietary code or jargon-dense PDFs. You can't audit what the calculator did, because you can't see how it works.</p>
+    <div class="callout">
+      <b>TaxStack's bet:</b> tax knowledge is a <em>public good</em>. The rules should be open data anyone can read and verify. The computation should happen on <em>your</em> machine. And the AI should translate the jargon — never touch the arithmetic.
+    </div>
+  </div>
+</section>
+
+<!-- ============ HOW IT WORKS ============ -->
+<section id="how">
+  <div class="wrap">
+    <h2>How it will work</h2>
+    <p class="sub">Three layers, each doing the one thing it's good at — in plain terms.</p>
+    <div class="grid">
+      <div class="card">
+        <div class="icon">📐</div>
+        <h3>The rulebook (OKF)</h3>
+        <p>Think of tax law as a recipe book. OKF — the Open Knowledge Format — writes that recipe book as plain, versioned data anyone can read: the rates, the thresholds, the formulas, and worked examples that prove it works. A tax professional can check a rule the way they'd check a document — no programming needed.</p>
+      </div>
+      <div class="card">
+        <div class="icon">⚙️</div>
+        <h3>The calculator (engine)</h3>
+        <p>A deterministic engine reads the rulebook and does the math — exactly, every time, with no guessing. Every number it produces can be traced back to a specific rule in a specific version of the rulebook. If the law changes, the rulebook gets a new version — nothing is ever silently edited.</p>
+      </div>
+      <div class="card">
+        <div class="icon">🤖</div>
+        <h3>The translator (local AI)</h3>
+        <p>A small AI model runs on <em>your</em> computer and translates tax jargon into plain language — "why is my deduction limited?" — always citing its source. It reads the same open rulebook as the engine, but only for explanations and citations — never for math. If the AI is switched off, everything still works.</p>
+      </div>
+    </div>
+
+    <div style="margin-top:28px;">
+      <h3 style="font-size:19px;margin-bottom:16px;">Why "local" matters</h3>
+      <div class="compare">
+        <div class="card bad">
+          <h3>☁️ Cloud tax software</h3>
+          <ul>
+            <li>Your income, deductions, and ID numbers live on their servers</li>
+            <li>You're the product — data monetized, upsells built in</li>
+            <li>The calculation logic is a black box you can't audit</li>
+            <li>Subscription forever, even for a once-a-year task</li>
+          </ul>
+        </div>
+        <div class="card good">
+          <h3>🖥️ TaxStack</h3>
+          <ul>
+            <li>Zero financial data leaves your machine — by architecture, not policy</li>
+            <li>Every rule is open data, auditable by anyone</li>
+            <li>Every calculation traceable to a cited rule and version</li>
+            <li>Free and open source — forever</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ IRON RULES ============ -->
+<section>
+  <div class="wrap">
+    <h2>The iron rules</h2>
+    <p class="sub">Three promises the project will not compromise — they're the whole point.</p>
+    <div class="iron"><b>🚫🧮 The AI never does arithmetic</b><p>Every number comes from the deterministic engine, traceable to a specific rule in a specific version of the rulebook. The AI explains; the engine computes.</p></div>
+    <div class="iron"><b>📎 Every AI claim carries a citation</b><p>Official publication or rule-pack entry. No citation, no claim. If the AI can't point to a source, it doesn't say it.</p></div>
+    <div class="iron"><b>🔌 Fully functional with zero AI</b><p>The model is an enhancement, never a dependency. No internet, no model downloaded? The app still computes correctly — the AI just stays quiet.</p></div>
+  </div>
+</section>
+
+<!-- ============ THE RULES (OKF PACKS) ============ -->
+<section id="rules">
+  <div class="wrap">
+    <h2>The rules are already public</h2>
+    <p class="sub">Two complete sample rule packs — real tax law encoded as data. You don't need to read YAML; the walkthroughs explain everything in plain language.</p>
+    <div class="packs">
+      <div class="pack">
+        <h3>🇺🇸 United States — Federal, TY2025</h3>
+        <p>Single-filer slice: income brackets, the standard-vs-itemized deduction election, Form 1040 line mappings, and worked test cases.</p>
+        <a href="https://github.com/taxstack/taxstack/blob/main/examples/okf_sample_us.yaml">View the pack ↗</a>
+        <a href="https://github.com/taxstack/taxstack/blob/main/docs/okf_sample_walkthrough.md">Plain-language guide ↗</a>
+      </div>
+      <div class="pack">
+        <h3>🇮🇳 India — FY2025-26</h3>
+        <p>Salaried individual: the old-vs-new regime choice every Indian filer faces, 80C deduction caps, cess, and ITR-1 mappings.</p>
+        <a href="https://github.com/taxstack/taxstack/blob/main/examples/okf_sample_in.yaml">View the pack ↗</a>
+        <a href="https://github.com/taxstack/taxstack/blob/main/docs/okf_sample_in_walkthrough.md">Plain-language guide ↗</a>
+      </div>
+    </div>
+    <p style="margin-top:20px;font-size:14px;color:var(--muted);">⚠️ Sample values are illustrative pending expert verification — that's what the expert review process is for. Spot something wrong? <a href="https://github.com/taxstack/taxstack/discussions" style="color:var(--accent);">That's exactly the feedback we want.</a></p>
+  </div>
+</section>
+
+<!-- ============ WHO IT'S FOR ============ -->
+<section>
+  <div class="wrap">
+    <h2>Who this is for</h2>
+    <p class="sub">Three kinds of people — and all three are welcome.</p>
+    <div class="roles">
+      <div class="role">
+        <div class="emoji">🙋</div>
+        <h3>The everyday filer</h3>
+        <p>You just want to file correctly and understand what you're filing — without the data leaving your hands. TaxStack is being built for you, and it knows when you need a professional.</p>
+      </div>
+      <div class="role">
+        <div class="emoji">🕵️</div>
+        <h3>The privacy-conscious</h3>
+        <p>You refuse to put your financial life on someone else's cloud. Here, your data never leaves your machine — verified by design, not promises.</p>
+      </div>
+      <div class="role">
+        <div class="emoji">🛠️</div>
+        <h3>The self-hoster</h3>
+        <p>You run capable tools locally and love open source. TaxStack is a serious local-first application, not a web wrapper.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ GET INVOLVED ============ -->
+<section id="join">
+  <div class="wrap">
+    <h2>Get involved — pick your path</h2>
+    <p class="sub">This is a pre-RFC project: we're publishing the vision first and designing the foundation in public. The most valuable thing you can give right now is criticism and expertise — a formal RFC may follow if the response justifies it.</p>
+    <div class="roles">
+      <div class="role">
+        <div class="emoji">🧾</div>
+        <h3>Tax professionals</h3>
+        <p><strong>No code needed.</strong> Review rule packs like documents, not code. Your first task: verify one worked example against an official source — about 90 minutes. Become a named Steward of your jurisdiction's pack.</p>
+      </div>
+      <div class="role">
+        <div class="emoji">⚙️</div>
+        <h3>Engineers</h3>
+        <p>Help design the OKF spec, the deterministic interpreter, the Tauri desktop shell, the local-AI layer. No tax knowledge required — the engine is deliberately tax-agnostic.</p>
+      </div>
+      <div class="role">
+        <div class="emoji">💬</div>
+        <h3>Everyone else</h3>
+        <p>Use the walkthroughs. Check the math on the sample packs. Tell us where the vision breaks — in your country, your situation, your reading of the law.</p>
+      </div>
+    </div>
+    <div class="cta">
+      <a class="btn ghost" href="https://github.com/taxstack/taxstack/discussions">Join the discussion</a>
+      <a class="btn ghost" href="https://github.com/taxstack/taxstack/blob/main/CONTRIBUTING.md">Read CONTRIBUTING.md</a>
+      <a class="btn ghost" href="https://github.com/taxstack/taxstack/blob/main/docs/manifesto.md">Full manifesto</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FAQ ============ -->
+<section id="faq">
+  <div class="wrap">
+    <h2>Questions, answered</h2>
+    <p class="sub">The ones people actually ask.</p>
+
+    <details class="faq">
+      <summary>Is there an app I can download yet?</summary>
+      <div class="faq-body">
+        <p>No — and we'd rather tell you that plainly. TaxStack is in <strong>vision stage (pre-RFC)</strong>: we're publishing the vision, the architecture, and working rule packs first. Informal feedback is welcome now; a formal RFC may follow if the response justifies it. The roadmap is: feedback → OKF spec v0.1 → reference rule pack → engine → desktop app.</p>
+      </div>
+    </details>
+
+    <details class="faq">
+      <summary>Will TaxStack be ready for this tax season?</summary>
+      <div class="faq-body">
+        <p>Honestly — a full app this season is unlikely; we're in vision stage. But tax season is exactly why the timing matters: it's when the pain of gated tax knowledge is sharpest, and it's when the most people are looking for alternatives. Getting involved now — even just telling us what your filing looks like — is what shapes what ships first.</p>
+      </div>
+    </details>
+
+    <details class="faq">
+      <summary>What is OKF, in one sentence?</summary>
+      <div class="faq-body">
+        <p>The <strong>Open Knowledge Format</strong> — a published spec for encoding a jurisdiction's tax law as versioned, human-readable data (rates, thresholds, formulas, form mappings, worked tests) instead of hiding it inside code. Think of it as tax law written as an auditable recipe book. <a href="https://github.com/taxstack/taxstack/blob/main/docs/manifesto.md">Details in the manifesto →</a></p>
+      </div>
+    </details>
+
+    <details class="faq">
+      <summary>Will the AI do my taxes?</summary>
+      <div class="faq-body">
+        <p><strong>No — that's the iron rule.</strong> The AI runs locally and explains: it translates jargon, walks you through questions, and cites its sources. Every number comes from the deterministic engine. If the AI hallucinates, the worst case is a confusing sentence — never a wrong tax calculation. And with the AI off, the app still works.</p>
+      </div>
+    </details>
+
+    <details class="faq">
+      <summary>Is my data really safe?</summary>
+      <div class="faq-body">
+        <p>TaxStack's core guarantee: <strong>zero financial data leaves your machine</strong>. No cloud account, no telemetry, no external API calls for tax processing or AI reasoning. AI runs on a local model via an on-device runtime (under evaluation — Ollama, llama.cpp, or equivalent), with encrypted local storage. We published a <a href="https://github.com/taxstack/taxstack/blob/main/docs/threat-model.md">threat model</a> listing exactly what we protect and how — and we invite scrutiny of it.</p>
+      </div>
+    </details>
+
+    <details class="faq">
+      <summary>Do I need to know how to code to help?</summary>
+      <div class="faq-body">
+        <p><strong>No.</strong> If you can read a tax manual, you can contribute — reviewing rule packs, checking worked examples against official publications, and telling us where our mental model of your work is wrong. Engineers are equally welcome; the engine needs no tax knowledge at all. <a href="https://github.com/taxstack/taxstack/blob/main/CONTRIBUTING.md">Start here →</a></p>
+      </div>
+    </details>
+
+    <details class="faq">
+      <summary>Which countries/jurisdictions will be supported?</summary>
+      <div class="faq-body">
+        <p>The design is jurisdiction-agnostic — every country's rules are a versioned "pack" authored by that country's own community. The two sample packs (US federal, India) prove the format works across very different systems. Which jurisdiction becomes the reference implementation is an open design question — <a href="https://github.com/taxstack/taxstack/discussions">we want your nomination and reasoning</a>.</p>
+      </div>
+    </details>
+
+    <details class="faq">
+      <summary>Is this a replacement for tax professionals?</summary>
+      <div class="faq-body">
+        <p><strong>No — explicitly not.</strong> TaxStack is an educational and assistive tool. For complex situations it helps you arrive informed and prepared, and it points you toward professional help when warranted. Tax professionals aren't the competition — they're the authors and reviewers of the very rules the engine runs on.</p>
+      </div>
+    </details>
+
+    <details class="faq">
+      <summary>Why should I trust a pre-code project?</summary>
+      <div class="faq-body">
+        <p>Fair question. We publish everything before building: the manifesto with its honest prior-art analysis, the architecture's known risks, a threat model, and working sample packs with test cases you can verify yourself. Trust here isn't claimed — it's designed in: golden tests, versioned packs, citations, and a correction process where fixes ship as new versions, never silent edits.</p>
+      </div>
+    </details>
+  </div>
+</section>
+
+</div>
+
+<footer>
+  <div class="wrap">
+    <p><b>TaxStack is an educational and assistive tool — not tax or financial advice, and not a licensed tax preparer.</b></p>
+    <p style="margin-top:10px;">
+      <a href="https://github.com/taxstack/taxstack">GitHub</a> ·
+      <a href="https://github.com/taxstack/taxstack/blob/main/docs/manifesto.md">Manifesto</a> ·
+      <a href="https://github.com/taxstack/taxstack/blob/main/GOVERNANCE.md">Governance</a> ·
+      <a href="https://github.com/taxstack/taxstack/blob/main/docs/threat-model.md">Threat model</a> ·
+      <a href="https://github.com/taxstack/taxstack/blob/main/LICENSE">Apache-2.0</a>
+    </p>
+    <p style="margin-top:14px;">Built because understanding your own taxes shouldn't require surrendering your data — or decoding the law alone.</p>
+  </div>
+</footer>
+
+</body>
+</html>
