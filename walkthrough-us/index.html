@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>US Federal Tax Pack Walkthrough — OKF Explained | TaxStack</title>
+<meta name="description" content="Plain-language walkthrough of TaxStack's US federal tax rule pack — inputs, brackets, deductions, Form 1040 mappings, and worked test cases. Tax law as open data.">
+<meta name="author" content="TaxStack">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://taxstack.github.io/walkthrough-us/">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="TaxStack">
+<meta property="og:title" content="US Federal Tax Pack — Plain-Language Walkthrough">
+<meta property="og:description" content="Tax law as open data: inputs, parameters, rules, form mappings, and golden tests — the complete shape of an OKF rule pack, explained without code.">
+<meta property="og:url" content="https://taxstack.github.io/walkthrough-us/">
+<meta property="og:image" content="https://taxstack.github.io/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://taxstack.github.io/og-image.png">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "US Federal Tax Pack — Plain-Language Walkthrough",
+  "description": "Plain-language walkthrough of TaxStack's US federal tax rule pack — inputs, brackets, deductions, Form 1040 mappings, and worked test cases.",
+  "url": "https://taxstack.github.io/walkthrough-us/",
+  "datePublished": "2026-11-16",
+  "author": { "@id": "https://taxstack.github.io/#organization" },
+  "publisher": { "@id": "https://taxstack.github.io/#organization" },
+  "isPartOf": { "@type": "WebSite", "name": "TaxStack", "url": "https://taxstack.github.io/" }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "TaxStack", "item": "https://taxstack.github.io/" },
+    { "@type": "ListItem", "position": 2, "name": "US Federal Tax Pack Walkthrough", "item": "https://taxstack.github.io/walkthrough-us/" }
+  ]
+}
+</script>
+<link rel="stylesheet" href="/site.css">
+</head>
+<body>
+
+<header>
+  <div class="wrap" data-nosnippet="true">
+    <a class="logo" href="/"><svg width="24" height="24" viewBox="0 0 64 64" fill="none" aria-hidden="true"><rect x="10" y="38" width="44" height="10" rx="2" fill="#58a6ff" opacity="0.45"/><rect x="14" y="26" width="44" height="10" rx="2" fill="#58a6ff" opacity="0.7"/><rect x="18" y="14" width="44" height="10" rx="2" fill="#58a6ff"/></svg><span>Tax<span class="stack">Stack</span></span></a>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/walkthrough-in/">India pack</a>
+      <a href="https://github.com/taxstack/taxstack">GitHub ↗</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap doc">
+  <h1>US Federal Income Tax — Plain-Language Walkthrough</h1>
+  <p class="lede">The same rule pack as <a href="https://github.com/taxstack/taxstack/blob/main/examples/okf_sample_us.yaml">examples/okf_sample_us.yaml</a>, explained for people who don't write code. YAML is the machine encoding; this page is the <em>expert review surface</em>. A second pack — <a href="/walkthrough-in/">India</a> — proves the format isn't US-shaped.</p>
+
+  <blockquote>
+    <p>In the full system, this walkthrough will be <strong>generated automatically</strong> from the pack — never hand-maintained — so what a tax professional reviews is always exactly what the engine computes. A friendly authoring/editing UI is an open RFC question, not a v0 promise.</p>
+  </blockquote>
+
+  <div class="warn">
+    <b>⚠️ Illustrative values.</b> All tax values in the sample are <strong>illustrative</strong> — a real pack is verified against official sources by domain experts before release.
+  </div>
+
+  <h2>The pack in one sentence</h2>
+  <p class="pullquote">US federal income tax, tax year 2025, for a single filer — the simplest slice that proves the whole pipeline works.</p>
+  <p>Every rule pack answers four questions: <strong>What do we ask the taxpayer? What numbers does the law set? How do we compute? Where do results land on the official form?</strong></p>
+
+  <h2>1. What we ask the taxpayer ("inputs")</h2>
+  <table>
+    <thead><tr><th>Question</th><th>Type</th><th>Required?</th><th>Prefilled from</th></tr></thead>
+    <tbody>
+      <tr><td>Total income before deductions</td><td>Money</td><td>Yes</td><td>W-2, 1099-INT, 1099-NEC</td></tr>
+      <tr><td>Filing status</td><td>Single / Married filing jointly / Married separate / Head of household</td><td>Yes (defaults to single)</td><td>—</td></tr>
+      <tr><td>Above-the-line adjustments (e.g., student-loan interest)</td><td>Money</td><td>No (default $0)</td><td>1098-E</td></tr>
+      <tr><td>Itemized deductions total (mortgage interest, SALT, charity…)</td><td>Money</td><td>No (default $0)</td><td>—</td></tr>
+      <tr><td>Credits</td><td>Money</td><td>No (default $0)</td><td>—</td></tr>
+    </tbody>
+  </table>
+  <p>Each input carries a plain-language explanation — this is the text the AI layer quotes when it talks to the user, so it's written for humans, not programmers.</p>
+
+  <h2>2. The numbers the law sets ("parameters")</h2>
+  <p>These are the values that change every year — Congress adjusts them, we just encode them.</p>
+  <h3>Standard deduction (by filing status, TY2025 — <em>illustrative values</em>)</h3>
+  <table>
+    <thead><tr><th>Filing status</th><th>Amount</th></tr></thead>
+    <tbody>
+      <tr><td>Single</td><td>$15,750</td></tr>
+      <tr><td>Married filing jointly</td><td>$31,500</td></tr>
+      <tr><td>Married filing separately</td><td>$15,750</td></tr>
+      <tr><td>Head of household</td><td>$23,625</td></tr>
+    </tbody>
+  </table>
+  <h3>Tax brackets (single filer shown; joint brackets also in the pack)</h3>
+  <table>
+    <thead><tr><th>Taxable income up to</th><th>Rate</th></tr></thead>
+    <tbody>
+      <tr><td>$11,925</td><td>10%</td></tr>
+      <tr><td>$48,475</td><td>12%</td></tr>
+      <tr><td>$103,350</td><td>22%</td></tr>
+      <tr><td>$197,300</td><td>24%</td></tr>
+      <tr><td>$250,525</td><td>32%</td></tr>
+      <tr><td>$626,350</td><td>35%</td></tr>
+      <tr><td>No ceiling</td><td>37%</td></tr>
+    </tbody>
+  </table>
+  <p>Every parameter cites its official source (IRS Publication 17, the 1040 instructions) and an effective date, so one file can hold multiple years' values and the engine always knows which applies.</p>
+
+  <h2>3. The computation ("rules") — in plain English</h2>
+  <p>The engine evaluates these in order; each one names its legal source and carries the explanation the AI cites:</p>
+  <table>
+    <thead><tr><th>#</th><th>Rule</th><th>What it means</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td><strong>AGI</strong> = gross income − adjustments</td><td>Income after above-the-line deductions</td></tr>
+      <tr><td>2</td><td><strong>Deduction used</strong> = larger of (itemized deductions, standard deduction for your status)</td><td>You get whichever is bigger</td></tr>
+      <tr><td>3</td><td><strong>Taxable income</strong> = max(0, AGI − deduction used)</td><td>Never below zero</td></tr>
+      <tr><td>4</td><td><strong>Tax before credits</strong> = progressive tax on taxable income</td><td>Each slice taxed at its bracket's rate — higher rates apply only to income <em>above</em> each threshold</td></tr>
+      <tr><td>5</td><td><strong>Total tax</strong> = max(0, tax before credits − credits)</td><td>Credits reduce the bill dollar-for-dollar</td></tr>
+    </tbody>
+  </table>
+  <p><strong>Key property:</strong> every rule traces to an official publication, uses only a restricted set of operations (no arbitrary code), and every number the app shows you can be traced back to a specific rule in a specific pack version.</p>
+
+  <h2>4. Where results land ("form map")</h2>
+  <table>
+    <thead><tr><th>Form 1040 line</th><th>Shows</th><th>Label</th></tr></thead>
+    <tbody>
+      <tr><td>Line 11</td><td>AGI</td><td>Adjusted gross income</td></tr>
+      <tr><td>Line 12</td><td>Deduction used</td><td>Standard or itemized deduction</td></tr>
+      <tr><td>Line 15</td><td>Taxable income</td><td>Taxable income</td></tr>
+      <tr><td>Line 16</td><td>Tax before credits</td><td>Tax</td></tr>
+      <tr><td>Line 24</td><td>Total tax</td><td>Total tax</td></tr>
+    </tbody>
+  </table>
+  <p>Tax math is deliberately separated from form line numbers — line layouts change more often than the underlying law, so they live in their own section.</p>
+
+  <h2>5. Proof it works ("golden tests")</h2>
+  <p>Worked examples transcribed from official publications — a pack <strong>cannot merge</strong> unless all of them pass:</p>
+  <table>
+    <thead><tr><th>Scenario</th><th>Expected result</th></tr></thead>
+    <tbody>
+      <tr><td>Single filer, $60,000 wages, standard deduction</td><td>AGI $60,000 → taxable $44,250 → tax <strong>$5,071.50</strong></td></tr>
+      <tr><td>Single filer, $25,000 wages</td><td>Taxable $9,250 → tax <strong>$925.00</strong> (fully inside first bracket)</td></tr>
+      <tr><td>Single filer, $10,000 wages</td><td>Taxable income clamps at <strong>$0</strong>, tax <strong>$0</strong> — never negative</td></tr>
+    </tbody>
+  </table>
+
+  <h2>What this walkthrough proves — and doesn't</h2>
+  <ul>
+    <li>✅ <strong>Proves:</strong> the <em>shape</em> of OKF is complete enough to express real tax law — inputs, parameters, rules, form mappings, and verifiable tests in one auditable file.</li>
+    <li>⚠️ <strong>Doesn't prove:</strong> that a tax professional can <em>author</em> this YAML unaided. That's an open RFC question — the long-term goal is a friendly editing surface over this same canonical format. For now, domain experts review the <em>rendered</em> pack (this page) and flag corrections; engineers handle the YAML encoding.</li>
+  </ul>
+  <p><strong>Try it yourself:</strong> if you file US federal taxes, check the rules and test cases above against the official 2025 instructions. Where are we wrong? That's exactly the feedback this project exists to get.</p>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p><b>TaxStack is an educational and assistive tool — not tax or financial advice, and not a licensed tax preparer.</b></p>
+    <p style="margin-top:10px;">
+      <a href="https://github.com/taxstack/taxstack">GitHub</a> ·
+      <a href="/">Home</a> ·
+      <a href="/walkthrough-in/">India walkthrough</a> ·
+      <a href="https://github.com/taxstack/taxstack/blob/main/docs/okf_sample_walkthrough.md">Source doc</a>
+    </p>
+    <p style="margin-top:14px;">Built because understanding your own taxes shouldn't require surrendering your data — or decoding the law alone.</p>
+  </div>
+</footer>
+
+<script data-goatcounter="https://taxstack.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>India Tax Pack Walkthrough — Old vs New Regime | TaxStack</title>
+<meta name="description" content="Plain-language walkthrough of TaxStack's India tax rule pack — old vs new regime, 80C deductions, cess, and ITR-1 mappings. Tax law as open data.">
+<meta name="author" content="TaxStack">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://taxstack.github.io/walkthrough-in/">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="TaxStack">
+<meta property="og:title" content="India Tax Pack — Plain-Language Walkthrough">
+<meta property="og:description" content="The old-vs-new regime choice, 80C deduction caps, cess, and ITR-1 mappings — Indian tax law encoded as open data, explained without code.">
+<meta property="og:url" content="https://taxstack.github.io/walkthrough-in/">
+<meta property="og:image" content="https://taxstack.github.io/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://taxstack.github.io/og-image.png">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "India Tax Pack — Plain-Language Walkthrough",
+  "description": "Plain-language walkthrough of TaxStack's India tax rule pack — old vs new regime, 80C deductions, cess, and ITR-1 mappings.",
+  "url": "https://taxstack.github.io/walkthrough-in/",
+  "datePublished": "2026-11-16",
+  "author": { "@id": "https://taxstack.github.io/#organization" },
+  "publisher": { "@id": "https://taxstack.github.io/#organization" },
+  "isPartOf": { "@type": "WebSite", "name": "TaxStack", "url": "https://taxstack.github.io/" }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "TaxStack", "item": "https://taxstack.github.io/" },
+    { "@type": "ListItem", "position": 2, "name": "India Tax Pack Walkthrough", "item": "https://taxstack.github.io/walkthrough-in/" }
+  ]
+}
+</script>
+<link rel="stylesheet" href="/site.css">
+</head>
+<body>
+
+<header>
+  <div class="wrap" data-nosnippet="true">
+    <a class="logo" href="/"><svg width="24" height="24" viewBox="0 0 64 64" fill="none" aria-hidden="true"><rect x="10" y="38" width="44" height="10" rx="2" fill="#58a6ff" opacity="0.45"/><rect x="14" y="26" width="44" height="10" rx="2" fill="#58a6ff" opacity="0.7"/><rect x="18" y="14" width="44" height="10" rx="2" fill="#58a6ff"/></svg><span>Tax<span class="stack">Stack</span></span></a>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/walkthrough-us/">US pack</a>
+      <a href="https://github.com/taxstack/taxstack">GitHub ↗</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap doc">
+  <h1>India Income Tax — Plain-Language Walkthrough</h1>
+  <p class="lede">The same rule pack as <a href="https://github.com/taxstack/taxstack/blob/main/examples/okf_sample_in.yaml">examples/okf_sample_in.yaml</a>, explained for people who don't write code. This is the <strong>second jurisdiction</strong> — it exists to prove OKF isn't US-shaped.</p>
+
+  <div class="warn">
+    <b>⚠️ Illustrative values.</b> All tax values are <strong>illustrative</strong> — a real pack is verified against official sources (Income-tax Act, ITR utilities) by domain experts before release.
+  </div>
+
+  <h2>The pack in one sentence</h2>
+  <p class="pullquote">Indian income tax for a salaried individual, FY 2025-26 — and it encodes the old-vs-new regime choice that every Indian filer faces.</p>
+
+  <h2>Why this sample matters</h2>
+  <p>The US pack proves OKF handles brackets and deductions. The India pack proves something harder: <strong>a regime choice</strong>. India doesn't have one tax schedule — it has two (old vs new), and the "right" answer depends on your deductions. In code-encoded tax apps this gets hard-coded into if/else spaghetti. In OKF it's just parameters keyed by regime plus rules — see §3.</p>
+
+  <h2>1. What we ask the taxpayer</h2>
+  <table>
+    <thead><tr><th>Question</th><th>Type</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr><td>Salary income</td><td>Money</td><td>From Form 16 / AIS</td></tr>
+      <tr><td>Other income</td><td>Money</td><td>Interest, dividends — one bucket in this sample</td></tr>
+      <tr><td><strong>Regime: new or old?</strong></td><td>Choice</td><td>The defining question of Indian filing</td></tr>
+      <tr><td>80C-family deductions (PPF, insurance, tuition…)</td><td>Money</td><td><strong>Only usable in the old regime</strong></td></tr>
+    </tbody>
+  </table>
+
+  <h2>2. The numbers the law sets</h2>
+  <p><strong>Standard deduction:</strong> ₹75,000 (new regime) vs ₹50,000 (old regime) — one parameter, two values, selected by regime.</p>
+  <h3>Slabs (new regime FY 2025-26, <em>illustrative</em>)</h3>
+  <table>
+    <thead><tr><th>Income up to</th><th>Rate</th></tr></thead>
+    <tbody>
+      <tr><td>₹4,00,000</td><td>Nil</td></tr>
+      <tr><td>₹8,00,000</td><td>5%</td></tr>
+      <tr><td>₹12,00,000</td><td>10%</td></tr>
+      <tr><td>₹16,00,000</td><td>15%</td></tr>
+      <tr><td>₹20,00,000</td><td>20%</td></tr>
+      <tr><td>Above</td><td>30%</td></tr>
+    </tbody>
+  </table>
+  <p>Old regime keeps its own slab table in the same file. <strong>Plus:</strong> 4% Health &amp; Education Cess, ₹1,50,000 cap on 80C deductions, and a flag for whether 80C applies per regime.</p>
+
+  <h2>3. The computation — in plain English</h2>
+  <table>
+    <thead><tr><th>#</th><th>Rule</th><th>What it means</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>Gross total income = salary + other income</td><td></td></tr>
+      <tr><td>2</td><td>Standard deduction = the amount for <em>your chosen regime</em></td><td></td></tr>
+      <tr><td>3</td><td>80C deductions = min(what you entered, ₹1,50,000 cap)</td><td></td></tr>
+      <tr><td>4</td><td><strong>Taxable income</strong> = income − standard deduction − (80C <strong>only if old regime</strong>)</td><td>The engine multiplies capped 80C by a 0-or-1 regime flag — no special "if" needed</td></tr>
+      <tr><td>5</td><td>Tax = progressive slabs for <em>your regime</em></td><td></td></tr>
+      <tr><td>6</td><td>Cess = 4% of tax</td><td></td></tr>
+      <tr><td>7</td><td>Total = tax + cess</td><td></td></tr>
+    </tbody>
+  </table>
+
+  <h2>4. Where results land — ITR-1 (Sahaj)</h2>
+  <p>Salary → Gross Total Income → Standard deduction → 80C deductions → Taxable Income → Tax → Cess → Total Payable.</p>
+
+  <h2>5. Proof it works — golden tests</h2>
+  <table>
+    <thead><tr><th>Scenario</th><th>Result</th></tr></thead>
+    <tbody>
+      <tr><td>New regime, ₹20,00,000 salary</td><td>Taxable ₹19,25,000 → tax ₹18,50,000 → +cess → <strong>₹19,24,000</strong></td></tr>
+      <tr><td>Old regime, ₹10,00,000 salary, ₹2,00,000 deductions entered</td><td>80C capped at ₹1,50,000 → taxable ₹8,00,000 → <strong>₹75,400</strong> total</td></tr>
+      <tr><td>New regime, ₹12,00,000 salary <em>with</em> 80C entered</td><td>80C contributes <strong>zero</strong> → taxable ₹11,25,000 → <strong>₹54,600</strong></td></tr>
+    </tbody>
+  </table>
+  <p>That third test is the interesting one — it proves the regime boundary is enforced by the data, not by a special case in code.</p>
+
+  <h2>The honest gap this sample exposes</h2>
+  <p><strong>Section 87A rebate is not modeled.</strong> Under the new regime, taxable income ≤ ₹12,00,000 gets a rebate up to ₹60,000 — which would zero out tax for many low-income filers. Expressing it needs a conditional the current OKF builtins don't have. The pack says so explicitly rather than hiding it — this is exactly the kind of edge case RFC question #1 (expression language) exists to resolve.</p>
+  <p><strong>For Indian tax professionals:</strong> check the slabs, the cess, the 80C cap, and the regime mechanics against the actual Finance Act 2025 and ITR utility behavior. Where are we wrong? That's the contribution this project runs on.</p>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p><b>TaxStack is an educational and assistive tool — not tax or financial advice, and not a licensed tax preparer.</b></p>
+    <p style="margin-top:10px;">
+      <a href="https://github.com/taxstack/taxstack">GitHub</a> ·
+      <a href="/">Home</a> ·
+      <a href="/walkthrough-us/">US walkthrough</a> ·
+      <a href="https://github.com/taxstack/taxstack/blob/main/docs/okf_sample_in_walkthrough.md">Source doc</a>
+    </p>
+    <p style="margin-top:14px;">Built because understanding your own taxes shouldn't require surrendering your data — or decoding the law alone.</p>
+  </div>
+</footer>
+
+<script data-goatcounter="https://taxstack.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

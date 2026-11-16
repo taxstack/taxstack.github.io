@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>TaxStack — Open-Source, Private, Offline Tax Software for Tax Season</title>
-<meta name="description" content="TaxStack is the open-source, local-first tax platform: tax rules encoded as open data (OKF), computed deterministically on your machine, explained by a local AI that never does arithmetic. Free, private, offline — get ready for tax season without surrendering your data.">
+<meta name="description" content="TaxStack is the open-source, local-first tax platform — rules as open data, computed on your machine, explained by local AI. Private, offline, free.">
 <meta name="keywords" content="open source tax software, private tax filing, offline tax calculator, local AI tax, income tax open source, tax rules as data, OKF, free tax software, file taxes privately, tax privacy, tax season 2026, file taxes 2026, tax filing season, tax return, ITR filing India, 1040">
 <meta name="author" content="TaxStack">
 <meta name="robots" content="index, follow">
@@ -17,8 +17,12 @@
 <meta property="og:title" content="TaxStack — Open-Source, Private, Offline Tax Software">
 <meta property="og:description" content="Tax rules as open data, computed on your own machine, explained in plain language. Open source · offline by design · Apache-2.0. Be ready for tax season.">
 <meta property="og:url" content="https://taxstack.github.io/">
-<!-- TODO: add og:image (1200x630 PNG) once we have a branded share card -->
+<meta property="og:image" content="https://taxstack.github.io/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="TaxStack — open-source, private, offline tax software">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://taxstack.github.io/og-image.png">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -30,7 +34,26 @@
   "url": "https://taxstack.github.io/",
   "license": "https://www.apache.org/licenses/LICENSE-2.0",
   "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
-  "author": { "@type": "Organization", "name": "TaxStack", "url": "https://github.com/taxstack" }
+  "author": { "@id": "https://taxstack.github.io/#organization" }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "@id": "https://taxstack.github.io/#organization",
+  "name": "TaxStack",
+  "url": "https://taxstack.github.io/",
+  "logo": "https://taxstack.github.io/favicon.svg",
+  "sameAs": ["https://github.com/taxstack"]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "TaxStack",
+  "url": "https://taxstack.github.io/"
 }
 </script>
 <script type="application/ld+json">
@@ -50,192 +73,12 @@
   ]
 }
 </script>
-<style>
-  :root {
-    --bg: #0d1117;
-    --surface: #161b22;
-    --border: #30363d;
-    --text: #e6edf3;
-    --muted: #8b949e;
-    --accent: #58a6ff;
-    --green: #3fb950;
-    --orange: #d29922;
-    --purple: #bc8cff;
-    --header-bg: rgba(13,17,23,0.9);
-  }
-  @media (prefers-color-scheme: light) {
-    :root {
-      --bg: #ffffff;
-      --surface: #f6f8fa;
-      --border: #d0d7de;
-      --text: #1f2328;
-      --muted: #59636e;
-      --accent: #0969da;
-      --green: #1a7f37;
-      --orange: #9a6700;
-      --purple: #8250df;
-      --header-bg: rgba(255,255,255,0.9);
-    }
-    .badge.orange { border-color: #d4a72c; }
-    .badge.green { border-color: #4ac26b; }
-    .badge.purple { border-color: #a371f7; }
-    .callout { background: rgba(210,153,34,0.08); }
-    .compare .card.bad { border-color: #d99b9b; }
-    .compare .card.bad h3 { color: #cf222e; }
-    .compare .card.good { border-color: #4ac26b; }
-    .compare .card.good h3 { color: #1a7f37; }
-    .iron { border-left-color: var(--purple); }
-    .iron b { color: var(--purple); }
-    .btn.primary { color: #ffffff; }
-    details.faq summary::after { color: var(--accent); }
-  }
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
-  body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    line-height: 1.65;
-  }
-  .wrap { max-width: 860px; margin: 0 auto; padding: 0 24px; }
-
-  header {
-    position: sticky; top: 0; z-index: 10;
-    background: var(--header-bg);
-    backdrop-filter: blur(8px);
-    border-bottom: 1px solid var(--border);
-    padding: 10px 0;
-  }
-  header .wrap { display: flex; justify-content: space-between; align-items: center; }
-  .logo { font-weight: 700; font-size: 19px; letter-spacing: -0.5px; text-decoration: none; color: var(--text); display: inline-flex; align-items: center; gap: 8px; }
-  .logo svg { display: block; }
-  .logo .stack { color: var(--accent); }
-  nav a {
-    color: var(--text); text-decoration: none; font-weight: 500;
-    margin-left: 18px; font-size: 14px;
-  }
-  nav a:hover { color: var(--accent); }
-
-  @media (max-width: 640px) {
-    header .wrap { flex-wrap: wrap; row-gap: 6px; }
-    nav { display: flex; flex-wrap: wrap; gap: 2px 14px; width: 100%; justify-content: center; padding-bottom: 4px; }
-    nav a { margin-left: 0; font-size: 13px; }
-    .hero { padding: 48px 0 36px; }
-    .hero h1 { font-size: 32px; letter-spacing: -1px; }
-    .hero p.tagline { font-size: 17px; }
-    .hero .brick, .hero svg { width: 56px; height: 56px; }
-    section { padding: 32px 0; }
-    h2 { font-size: 23px; }
-    .btn { padding: 12px 20px; font-size: 14px; }
-    .grid, .roles, .packs, .compare { grid-template-columns: 1fr; }
-    .compare .card.bad, .compare .card.good { order: initial; }
-    footer { padding: 28px 0; }
-  }
-
-  .hero { text-align: center; padding: 48px 0 48px; }
-  .hero h1 { font-size: 46px; letter-spacing: -1.5px; margin: 16px 0 14px; line-height: 1.15; }
-  .hero p.tagline {
-    font-size: 20px; color: var(--muted);
-    max-width: 660px; margin: 0 auto 30px; font-style: italic;
-  }
-  .badges { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
-  .badge {
-    font-size: 12.5px; padding: 5px 12px; border-radius: 20px;
-    border: 1px solid var(--border); background: var(--surface);
-  }
-  .badge.orange { color: var(--orange); border-color: #6e4f10; }
-  .badge.green { color: var(--green); border-color: #1f6f33; }
-  .badge.purple { color: var(--purple); border-color: #5b3d8f; }
-  .cta { display: flex; gap: 14px; justify-content: center; margin-top: 28px; flex-wrap: wrap; }
-  .btn {
-    display: inline-block; padding: 13px 28px; border-radius: 8px;
-    font-weight: 600; font-size: 15px; text-decoration: none;
-  }
-  .btn.primary { background: var(--accent); color: #0d1117; }
-  .btn.ghost { border: 1px solid var(--border); color: var(--text); }
-  .btn.ghost:hover { border-color: var(--accent); }
-
-  section { padding: 40px 0; border-top: 1px solid var(--border); }
-  h2 { font-size: 26px; letter-spacing: -0.5px; margin-bottom: 8px; }
-  .sub { color: var(--muted); margin-bottom: 26px; max-width: 660px; font-size: 16px; }
-
-  .prose p { margin-bottom: 12px; font-size: 15.5px; }
-  .prose strong { color: var(--text); }
-
-  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px; }
-  .card {
-    background: var(--surface); border: 1px solid var(--border);
-    border-radius: 10px; padding: 20px;
-  }
-  .card .icon { font-size: 26px; margin-bottom: 10px; }
-  .card h3 { font-size: 16.5px; margin-bottom: 8px; }
-  .card p { font-size: 14px; color: var(--muted); }
-
-  .compare { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 8px; }
-  @media (max-width: 640px) { .compare { grid-template-columns: 1fr; } }
-  .compare .card.bad { border-color: #6e3030; }
-  .compare .card.bad h3 { color: #f85149; }
-  .compare .card.good { border-color: #1f6f33; }
-  .compare .card.good h3 { color: var(--green); }
-  .compare ul { padding-left: 18px; font-size: 14px; color: var(--muted); }
-  .compare li { margin-bottom: 7px; }
-
-  .iron {
-    background: var(--surface); border: 1px solid var(--border);
-    border-left: 3px solid var(--purple); border-radius: 8px;
-    padding: 18px 22px; margin-bottom: 12px;
-  }
-  .iron b { color: var(--purple); }
-  .iron p { color: var(--muted); font-size: 14.5px; margin-top: 4px; }
-
-  .callout {
-    border: 1px solid #6e4f10; background: rgba(210,153,34,0.08);
-    border-radius: 10px; padding: 20px 22px; margin: 22px 0; font-size: 14.5px;
-  }
-  .callout b { color: var(--orange); }
-
-  .packs { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-  @media (max-width: 640px) { .packs { grid-template-columns: 1fr; } }
-  .pack {
-    background: var(--surface); border: 1px solid var(--border);
-    border-radius: 10px; padding: 20px;
-  }
-  .pack h3 { font-size: 16.5px; margin-bottom: 8px; }
-  .pack p { font-size: 14px; color: var(--muted); margin-bottom: 12px; }
-  .pack a { color: var(--accent); font-size: 13.5px; text-decoration: none; margin-right: 14px; }
-  .pack a:hover { text-decoration: underline; }
-
-  .roles { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 16px; }
-  .role { border: 1px solid var(--border); border-radius: 10px; padding: 20px 16px; text-align: center; }
-  .role .emoji { font-size: 30px; }
-  .role h3 { font-size: 15.5px; margin: 12px 0 8px; }
-  .role p { font-size: 13.5px; color: var(--muted); }
-
-  details.faq {
-    border: 1px solid var(--border); border-radius: 10px;
-    background: var(--surface); margin-bottom: 10px; overflow: hidden;
-  }
-  details.faq summary {
-    cursor: pointer; padding: 14px 20px; font-weight: 600; font-size: 15px;
-    list-style: none; display: flex; justify-content: space-between; align-items: center;
-  }
-  details.faq summary::after { content: "+"; color: var(--accent); font-size: 20px; font-weight: 400; }
-  details.faq[open] summary::after { content: "–"; }
-  details.faq .faq-body { padding: 0 20px 16px; color: var(--muted); font-size: 14.5px; }
-  details.faq .faq-body p { margin-bottom: 10px; }
-  details.faq .faq-body a { color: var(--accent); }
-
-  footer {
-    border-top: 1px solid var(--border); padding: 36px 0;
-    color: var(--muted); font-size: 13px; text-align: center;
-  }
-  footer a { color: var(--accent); text-decoration: none; }
-</style>
+<link rel="stylesheet" href="site.css">
 </head>
 <body>
 
 <header>
-  <div class="wrap">
+  <div class="wrap" data-nosnippet="true">
     <a class="logo" href="#top"><svg width="24" height="24" viewBox="0 0 64 64" fill="none" aria-hidden="true"><rect x="10" y="38" width="44" height="10" rx="2" fill="#58a6ff" opacity="0.45"/><rect x="14" y="26" width="44" height="10" rx="2" fill="#58a6ff" opacity="0.7"/><rect x="18" y="14" width="44" height="10" rx="2" fill="#58a6ff"/></svg><span>Tax<span class="stack">Stack</span></span></a>
     <nav>
       <a href="#problem">Problem statement</a>
@@ -254,13 +97,13 @@
     <svg width="72" height="72" viewBox="0 0 64 64" fill="none" aria-hidden="true" style="margin-bottom:2px;"><rect x="10" y="38" width="44" height="10" rx="2" fill="#58a6ff" opacity="0.45"/><rect x="14" y="26" width="44" height="10" rx="2" fill="#58a6ff" opacity="0.7"/><rect x="18" y="14" width="44" height="10" rx="2" fill="#58a6ff"/></svg>
     <h1>Your taxes, on your machine,<br>explained in plain language</h1>
     <p class="tagline">Tax knowledge shouldn't be a paid product — it should be open data, computed on your own computer, explained by an AI that never does the math.</p>
-    <div class="badges">
+    <div class="badges" data-nosnippet="true">
       <span class="badge orange">Vision stage — design preview, no app yet</span>
       <span class="badge green">Tax season is coming — get in early</span>
       <span class="badge green">100% offline by design</span>
       <span class="badge purple">Open source · Apache-2.0</span>
     </div>
-    <div class="cta">
+    <div class="cta" data-nosnippet="true">
       <a class="btn ghost" href="https://github.com/taxstack">Explore the project</a>
       <a class="btn ghost" href="#how">How it works</a>
     </div>
@@ -351,13 +194,13 @@
         <h3>🇺🇸 United States — Federal, TY2025</h3>
         <p>Single-filer slice: income brackets, the standard-vs-itemized deduction election, Form 1040 line mappings, and worked test cases.</p>
         <a href="https://github.com/taxstack/taxstack/blob/main/examples/okf_sample_us.yaml">View the pack ↗</a>
-        <a href="https://github.com/taxstack/taxstack/blob/main/docs/okf_sample_walkthrough.md">Plain-language guide ↗</a>
+        <a href="/walkthrough-us/">Plain-language guide →</a>
       </div>
       <div class="pack">
         <h3>🇮🇳 India — FY2025-26</h3>
         <p>Salaried individual: the old-vs-new regime choice every Indian filer faces, 80C deduction caps, cess, and ITR-1 mappings.</p>
         <a href="https://github.com/taxstack/taxstack/blob/main/examples/okf_sample_in.yaml">View the pack ↗</a>
-        <a href="https://github.com/taxstack/taxstack/blob/main/docs/okf_sample_in_walkthrough.md">Plain-language guide ↗</a>
+        <a href="/walkthrough-in/">Plain-language guide →</a>
       </div>
     </div>
     <p style="margin-top:20px;font-size:14px;color:var(--muted);">⚠️ Sample values are illustrative pending expert verification — that's what the expert review process is for. Spot something wrong? <a href="https://github.com/taxstack/taxstack/discussions" style="color:var(--accent);">That's exactly the feedback we want.</a></p>
