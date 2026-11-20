@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>TaxStack — Open-Source, Private, Offline Tax Software for Tax Season</title>
 <meta name="description" content="TaxStack is the open-source, local-first tax platform — rules as open data, computed on your machine, explained by local AI. Private, offline, free.">
-<meta name="keywords" content="open source tax software, private tax filing, offline tax calculator, local AI tax, income tax open source, tax rules as data, OKF, free tax software, file taxes privately, tax privacy, tax season 2026, file taxes 2026, tax filing season, tax return, ITR filing India, 1040">
+<meta name="keywords" content="open source tax software, free tax software, tax tool, tax platform, private tax filing, offline tax calculator, local AI tax, income tax open source, tax rules as data, OKF, file taxes privately, tax privacy, tax season 2026, file taxes 2026, tax filing season, tax return, ITR filing India, 1040">
 <meta name="author" content="TaxStack">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://taxstack.github.io/">
@@ -63,6 +63,7 @@
   "@type": "FAQPage",
   "mainEntity": [
     { "@type": "Question", "name": "Is there an app I can download yet?", "acceptedAnswer": { "@type": "Answer", "text": "No — TaxStack is in vision stage (pre-RFC): we're publishing the vision, architecture, and working rule packs first. Informal feedback is welcome now; a formal RFC may follow if the response justifies it. Roadmap: feedback → OKF spec → reference rule pack → engine → desktop app." } },
+    { "@type": "Question", "name": "Is TaxStack free?", "acceptedAnswer": { "@type": "Answer", "text": "Yes — TaxStack is free, open-source software under the Apache-2.0 license, with no subscription, no upsells, and no account. The rules it runs on are open data that anyone can audit." } },
     { "@type": "Question", "name": "Will TaxStack be ready for this tax season?", "acceptedAnswer": { "@type": "Answer", "text": "Honestly, a full app this season is unlikely — we're in vision stage. But tax season is exactly why the timing matters: it's when the pain is sharpest, and getting involved now is what shapes what ships first." } },
     { "@type": "Question", "name": "What is OKF, in one sentence?", "acceptedAnswer": { "@type": "Answer", "text": "The Open Knowledge Format — a spec for encoding a jurisdiction's tax law as versioned, human-readable data (rates, thresholds, formulas, form mappings, worked tests) instead of hiding it inside code." } },
     { "@type": "Question", "name": "Will the AI do my taxes?", "acceptedAnswer": { "@type": "Answer", "text": "No — that's the iron rule. The local AI explains and cites sources; every number comes from the deterministic engine. With the AI off, the app still works." } },
@@ -102,7 +103,7 @@
       <span class="badge orange">Vision stage — design preview, no app yet</span>
       <span class="badge green">Tax season is coming — get in early</span>
       <span class="badge green">100% offline by design</span>
-      <span class="badge purple">Open source · Apache-2.0</span>
+      <span class="badge purple">Free · open source · Apache-2.0</span>
     </div>
     <div class="cta" data-nosnippet="true">
       <a class="btn ghost" href="https://github.com/taxstack">Explore the project</a>
@@ -277,6 +278,13 @@
     </details>
 
     <details class="faq">
+      <summary>Is TaxStack free?</summary>
+      <div class="faq-body">
+        <p><strong>Yes — free, open-source software under the Apache-2.0 license.</strong> No subscription, no upsells, no account required. The rules it runs on are open data that anyone can audit, and there's no financial incentive to monetize your return.</p>
+      </div>
+    </details>
+
+    <details class="faq">
       <summary>Will TaxStack be ready for this tax season?</summary>
       <div class="faq-body">
         <p>Honestly — a full app this season is unlikely; we're in vision stage. But tax season is exactly why the timing matters: it's when the pain of gated tax knowledge is sharpest, and it's when the most people are looking for alternatives. Getting involved now — even just telling us what your filing looks like — is what shapes what ships first.</p>
@@ -312,7 +320,7 @@
     </details>
 
     <details class="faq">
-      <summary>Which countries/jurisdictions will be supported?</summary>
+      <summary>Which countries will be supported?</summary>
       <div class="faq-body">
         <p>The design is jurisdiction-agnostic — every country's rules are a versioned "pack" authored by that country's own community. The two sample packs (US federal, India) prove the format works across very different systems. Which jurisdiction becomes the reference implementation is an open design question — <a href="https://github.com/taxstack/taxstack/discussions">we want your nomination and reasoning</a>.</p>
       </div>

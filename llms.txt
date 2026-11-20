@@ -1,0 +1,30 @@
+# TaxStack
+
+> TaxStack is an open-source, local-first, AI-native tax platform. Tax rules are encoded as versioned, human-readable data — the Open Knowledge Format (OKF) — rather than hidden in code. A deterministic engine computes every number on the user's own machine, and a local LLM explains results in plain language with citations. The LLM never performs arithmetic, and zero financial data leaves the user's device.
+
+TaxStack is currently in vision stage (pre-RFC): there is no downloadable app yet. It is an educational and assistive tool — not tax or financial advice, and not a licensed tax preparer.
+
+## Key facts
+
+- What it is: free, open-source tax software / tax filing platform where tax law is open data (OKF packs), not proprietary code
+- Status: vision stage / pre-RFC; no app available yet
+- License: Apache-2.0 — free forever, no subscription, no upsells
+- Platform (planned): Tauri desktop app, SQLCipher-encrypted SQLite, 100% offline
+- AI: local LLM + RAG over tax publications and OKF packs; explains and cites, never computes
+- Privacy: zero financial data leaves the machine; no cloud account, no telemetry
+- Jurisdictions: jurisdiction-agnostic design; sample packs for US federal and India
+- Website: https://taxstack.github.io
+- Source code: https://github.com/taxstack/taxstack
+
+## Pages
+
+- [Home](https://taxstack.github.io/): what TaxStack is, the problem it solves, how it works, FAQ
+- [US Federal Tax Pack Walkthrough](https://taxstack.github.io/walkthrough-us/): plain-language explanation of the OKF format via the US federal sample — inputs, parameters, rules, Form 1040 mappings, golden tests
+- [India Tax Pack Walkthrough](https://taxstack.github.io/walkthrough-in/): same walkthrough for the India sample — old vs. new regime, 80C deductions, cess, ITR-1 mappings
+- [Manifesto & architecture](https://github.com/taxstack/taxstack/blob/main/docs/manifesto.md): vision, landscape analysis, technical architecture, licensing proposal
+- [Threat model](https://github.com/taxstack/taxstack/blob/main/docs/threat-model.md): assets, trust boundaries, and mitigations
+- [FAQ](https://taxstack.github.io/#faq): common questions — app availability, AI role, data privacy, contribution without code
+
+## Optional
+
+- [llms-full.txt](https://taxstack.github.io/llms-full.txt): full text of all site pages in one file

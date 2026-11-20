@@ -1,0 +1,898 @@
+# TaxStack — full site text
+
+> TaxStack is an open-source, local-first, AI-native tax platform. Tax rules are encoded as versioned, human-readable data — the Open Knowledge Format (OKF) — rather than hidden in code. A deterministic engine computes every number on the user's own machine, and a local LLM explains results in plain language with citations. The LLM never performs arithmetic, and zero financial data leaves the user's device. TaxStack is in vision stage (pre-RFC): no app is available yet. It is an educational and assistive tool — not tax or financial advice, and not a licensed tax preparer.
+
+
+
+---
+
+## Home — https://taxstack.github.io/
+
+TaxStack
+ 
+ Problem statement
+ How it works
+ The rules
+ Get involved
+ FAQ
+ GitHub ↗
+ 
+ 
+
+ 
+ 
+ Your taxes, on your machine,
+explained in plain language
+
+ Tax knowledge shouldn't be a paid product — it should be open data, computed on your own computer, explained by an AI that never does the math.
+
+ 
+ Vision stage — design preview, no app yet
+ Tax season is coming — get in early
+ 100% offline by design
+ Free · open source · Apache-2.0
+ 
+
+ 
+ Explore the project
+ How it works
+ 
+
+ 
+
+ 
+ Problem statement
+
+ Filing your own taxes should be possible without surrendering your financial life to a cloud.
+
+ Every year, millions of people face the same choice: navigate dense government manuals alone, or hand their most sensitive financial data — income, deductions, identity numbers — to a corporation's servers. For many, professional guidance is simply out of reach.
+
+ Tax software isn't really selling you software. It's selling convenience at the price of your data: upsells at every step, dark patterns, and your financial profile monetized on someone else's infrastructure.
+
+ Meanwhile, the rules themselves — the actual tax law — are locked inside proprietary code or jargon-dense PDFs. You can't audit what the calculator did, because you can't see how it works.
+
+ 
+ TaxStack's bet: tax knowledge is a public good. The rules should be open data anyone can read and verify. The computation should happen on your machine. And the AI should translate the jargon — never touch the arithmetic.
+ 
+
+ 
+
+ 
+ How it will work
+
+ Three layers, each doing the one thing it's good at — in plain terms.
+
+ 
+ 
+ 📐
+
+ The rulebook (OKF)
+
+ Think of tax law as a recipe book. OKF — the Open Knowledge Format — writes that recipe book as plain, versioned data anyone can read: the rates, the thresholds, the formulas, and worked examples that prove it works. A tax professional can check a rule the way they'd check a document — no programming needed.
+
+ 
+
+ 
+ ⚙️
+
+ The calculator (engine)
+
+ A deterministic engine reads the rulebook and does the math — exactly, every time, with no guessing. Every number it produces can be traced back to a specific rule in a specific version of the rulebook. If the law changes, the rulebook gets a new version — nothing is ever silently edited.
+
+ 
+
+ 
+ 🤖
+
+ The translator (local AI)
+
+ A small AI model runs on your computer and translates tax jargon into plain language — "why is my deduction limited?" — always citing its source. It reads the same open rulebook as the engine, but only for explanations and citations — never for math. If the AI is switched off, everything still works.
+
+ 
+
+ 
+
+ 
+ Why "local" matters
+
+ 
+ 
+ ☁️ Cloud tax software
+
+ 
+ - Your income, deductions, and ID numbers live on their servers
+
+ - You're the product — data monetized, upsells built in
+
+ - The calculation logic is a black box you can't audit
+
+ - Subscription forever, even for a once-a-year task
+
+ 
+
+ 
+
+ 
+ 🖥️ TaxStack
+
+ 
+ - Zero financial data leaves your machine — by architecture, not policy
+
+ - Every rule is open data, auditable by anyone
+
+ - Every calculation traceable to a cited rule and version
+
+ - Free and open source — forever
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+ The iron rules
+
+ Three promises the project will not compromise — they're the whole point.
+
+ 🚫🧮 The AI never does arithmeticEvery number comes from the deterministic engine, traceable to a specific rule in a specific version of the rulebook. The AI explains; the engine computes.
+
+ 📎 Every AI claim carries a citationOfficial publication or rule-pack entry. No citation, no claim. If the AI can't point to a source, it doesn't say it.
+
+ 🔌 Fully functional with zero AIThe model is an enhancement, never a dependency. No internet, no model downloaded? The app still computes correctly — the AI just stays quiet.
+
+ 
+
+ 
+ The rules are already public
+
+ Two complete sample rule packs — real tax law encoded as data. You don't need to read YAML; the walkthroughs explain everything in plain language.
+
+ 
+ 
+ 🇺🇸 United States — Federal, TY2025
+
+ Single-filer slice: income brackets, the standard-vs-itemized deduction election, Form 1040 line mappings, and worked test cases.
+
+ View the pack ↗
+ Plain-language guide →
+ 
+
+ 
+ 🇮🇳 India — FY2025-26
+
+ Salaried individual: the old-vs-new regime choice every Indian filer faces, 80C deduction caps, cess, and ITR-1 mappings.
+
+ View the pack ↗
+ Plain-language guide →
+ 
+
+ 
+
+ ⚠️ Sample values are illustrative pending expert verification — that's what the expert review process is for. Spot something wrong? That's exactly the feedback we want.
+
+ 
+
+ 
+ Who this is for
+
+ Three kinds of people — and all three are welcome.
+
+ 
+ 
+ 🙋
+
+ The everyday filer
+
+ You just want to file correctly and understand what you're filing — without the data leaving your hands. TaxStack is being built for you, and it knows when you need a professional.
+
+ 
+
+ 
+ 🕵️
+
+ The privacy-conscious
+
+ You refuse to put your financial life on someone else's cloud. Here, your data never leaves your machine — verified by design, not promises.
+
+ 
+
+ 
+ 🛠️
+
+ The self-hoster
+
+ You run capable tools locally and love open source. TaxStack is a serious local-first application, not a web wrapper.
+
+ 
+
+ 
+
+ 
+
+ 
+ Get involved — pick your path
+
+ This is a pre-RFC project: we're publishing the vision first and designing the foundation in public. The most valuable thing you can give right now is criticism and expertise — a formal RFC may follow if the response justifies it.
+
+ 
+ 
+ 🧾
+
+ Tax professionals
+
+ No code needed. Review rule packs like documents, not code. Your first task: verify one worked example against an official source — about 90 minutes. Become a named Steward of your jurisdiction's pack.
+
+ 
+
+ 
+ ⚙️
+
+ Engineers
+
+ Help design the OKF spec, the deterministic interpreter, the Tauri desktop shell, the local-AI layer. No tax knowledge required — the engine is deliberately tax-agnostic.
+
+ 
+
+ 
+ 💬
+
+ Everyone else
+
+ Use the walkthroughs. Check the math on the sample packs. Tell us where the vision breaks — in your country, your situation, your reading of the law.
+
+ 
+
+ 
+
+ 
+ Join the discussion
+ Read CONTRIBUTING.md
+ Full manifesto
+ 
+
+ 
+
+ 
+ Questions, answered
+
+ The ones people actually ask.
+
+ 
+ Is there an app I can download yet?
+
+ 
+ No — and we'd rather tell you that plainly. TaxStack is in vision stage (pre-RFC): we're publishing the vision, the architecture, and working rule packs first. Informal feedback is welcome now; a formal RFC may follow if the response justifies it. The roadmap is: feedback → OKF spec v0.1 → reference rule pack → engine → desktop app.
+
+ 
+
+ 
+
+ 
+ Is TaxStack free?
+
+ 
+ Yes — free, open-source software under the Apache-2.0 license. No subscription, no upsells, no account required. The rules it runs on are open data that anyone can audit, and there's no financial incentive to monetize your return.
+
+ 
+
+ 
+
+ 
+ Will TaxStack be ready for this tax season?
+
+ 
+ Honestly — a full app this season is unlikely; we're in vision stage. But tax season is exactly why the timing matters: it's when the pain of gated tax knowledge is sharpest, and it's when the most people are looking for alternatives. Getting involved now — even just telling us what your filing looks like — is what shapes what ships first.
+
+ 
+
+ 
+
+ 
+ What is OKF, in one sentence?
+
+ 
+ The Open Knowledge Format — a published spec for encoding a jurisdiction's tax law as versioned, human-readable data (rates, thresholds, formulas, form mappings, worked tests) instead of hiding it inside code. Think of it as tax law written as an auditable recipe book. Details in the manifesto →
+
+ 
+
+ 
+
+ 
+ Will the AI do my taxes?
+
+ 
+ No — that's the iron rule. The AI runs locally and explains: it translates jargon, walks you through questions, and cites its sources. Every number comes from the deterministic engine. If the AI hallucinates, the worst case is a confusing sentence — never a wrong tax calculation. And with the AI off, the app still works.
+
+ 
+
+ 
+
+ 
+ Is my data really safe?
+
+ 
+ TaxStack's core guarantee: zero financial data leaves your machine. No cloud account, no telemetry, no external API calls for tax processing or AI reasoning. AI runs on a local model via an on-device runtime (under evaluation — Ollama, llama.cpp, or equivalent), with encrypted local storage. We published a threat model listing exactly what we protect and how — and we invite scrutiny of it.
+
+ 
+
+ 
+
+ 
+ Do I need to know how to code to help?
+
+ 
+ No. If you can read a tax manual, you can contribute — reviewing rule packs, checking worked examples against official publications, and telling us where our mental model of your work is wrong. Engineers are equally welcome; the engine needs no tax knowledge at all. Start here →
+
+ 
+
+ 
+
+ 
+ Which countries will be supported?
+
+ 
+ The design is jurisdiction-agnostic — every country's rules are a versioned "pack" authored by that country's own community. The two sample packs (US federal, India) prove the format works across very different systems. Which jurisdiction becomes the reference implementation is an open design question — we want your nomination and reasoning.
+
+ 
+
+ 
+
+ 
+ Is this a replacement for tax professionals?
+
+ 
+ No — explicitly not. TaxStack is an educational and assistive tool. For complex situations it helps you arrive informed and prepared, and it points you toward professional help when warranted. Tax professionals aren't the competition — they're the authors and reviewers of the very rules the engine runs on.
+
+ 
+
+ 
+
+ 
+ Why should I trust a pre-code project?
+
+ 
+ Fair question. We publish everything before building: the manifesto with its honest prior-art analysis, the architecture's known risks, a threat model, and working sample packs with test cases you can verify yourself. Trust here isn't claimed — it's designed in: golden tests, versioned packs, citations, and a correction process where fixes ship as new versions, never silent edits.
+
+ 
+
+ 
+
+ 
+
+ 
+ TaxStack is an educational and assistive tool — not tax or financial advice, and not a licensed tax preparer.
+
+ 
+ GitHub ·
+ Manifesto ·
+ Governance ·
+ Threat model ·
+ Apache-2.0
+ 
+
+ Built because understanding your own taxes shouldn't require surrendering your data — or decoding the law alone.
+
+
+---
+
+## US Federal Tax Pack Walkthrough — https://taxstack.github.io/walkthrough-us/
+
+TaxStack
+ 
+ Home
+ India pack
+ GitHub ↗
+ 
+ 
+
+ US Federal Income Tax — Plain-Language Walkthrough
+
+ The same rule pack as examples/okf_sample_us.yaml, explained for people who don't write code. YAML is the machine encoding; this page is the expert review surface. A second pack — India — proves the format isn't US-shaped.
+
+ 
+ In the full system, this walkthrough will be generated automatically from the pack — never hand-maintained — so what a tax professional reviews is always exactly what the engine computes. A friendly authoring/editing UI is an open RFC question, not a v0 promise.
+
+ 
+
+ 
+ ⚠️ Illustrative values. All tax values in the sample are illustrative — a real pack is verified against official sources by domain experts before release.
+ 
+
+ The pack in one sentence
+
+ US federal income tax, tax year 2025, for a single filer — the simplest slice that proves the whole pipeline works.
+
+ Every rule pack answers four questions: What do we ask the taxpayer? What numbers does the law set? How do we compute? Where do results land on the official form?
+
+ 1. What we ask the taxpayer ("inputs")
+
+ 
+ | | Question
+
+ | Type
+
+ | Required?
+
+ | Prefilled from
+
+ 
+ | Total income before deductions
+
+ | Money
+
+ | Yes
+
+ | W-2, 1099-INT, 1099-NEC
+
+ | Filing status
+
+ | Single / Married filing jointly / Married separate / Head of household
+
+ | Yes (defaults to single)
+
+ | —
+
+ | Above-the-line adjustments (e.g., student-loan interest)
+
+ | Money
+
+ | No (default $0)
+
+ | 1098-E
+
+ | Itemized deductions total (mortgage interest, SALT, charity…)
+
+ | Money
+
+ | No (default $0)
+
+ | —
+
+ | Credits
+
+ | Money
+
+ | No (default $0)
+
+ | —
+
+ 
+
+ 
+
+ Each input carries a plain-language explanation — this is the text the AI layer quotes when it talks to the user, so it's written for humans, not programmers.
+
+ 2. The numbers the law sets ("parameters")
+
+ These are the values that change every year — Congress adjusts them, we just encode them.
+
+ Standard deduction (by filing status, TY2025 — illustrative values)
+
+ 
+ | | Filing status
+
+ | Amount
+
+ 
+ | Single
+
+ | $15,750
+
+ | Married filing jointly
+
+ | $31,500
+
+ | Married filing separately
+
+ | $15,750
+
+ | Head of household
+
+ | $23,625
+
+ 
+
+ 
+
+ Tax brackets (single filer shown; joint brackets also in the pack)
+
+ 
+ | | Taxable income up to
+
+ | Rate
+
+ 
+ | $11,925
+
+ | 10%
+
+ | $48,475
+
+ | 12%
+
+ | $103,350
+
+ | 22%
+
+ | $197,300
+
+ | 24%
+
+ | $250,525
+
+ | 32%
+
+ | $626,350
+
+ | 35%
+
+ | No ceiling
+
+ | 37%
+
+ 
+
+ 
+
+ Every parameter cites its official source (IRS Publication 17, the 1040 instructions) and an effective date, so one file can hold multiple years' values and the engine always knows which applies.
+
+ 3. The computation ("rules") — in plain English
+
+ The engine evaluates these in order; each one names its legal source and carries the explanation the AI cites:
+
+ 
+ | | #
+
+ | Rule
+
+ | What it means
+
+ 
+ | 1
+
+ | AGI = gross income − adjustments
+
+ | Income after above-the-line deductions
+
+ | 2
+
+ | Deduction used = larger of (itemized deductions, standard deduction for your status)
+
+ | You get whichever is bigger
+
+ | 3
+
+ | Taxable income = max(0, AGI − deduction used)
+
+ | Never below zero
+
+ | 4
+
+ | Tax before credits = progressive tax on taxable income
+
+ | Each slice taxed at its bracket's rate — higher rates apply only to income above each threshold
+
+ | 5
+
+ | Total tax = max(0, tax before credits − credits)
+
+ | Credits reduce the bill dollar-for-dollar
+
+ 
+
+ 
+
+ Key property: every rule traces to an official publication, uses only a restricted set of operations (no arbitrary code), and every number the app shows you can be traced back to a specific rule in a specific pack version.
+
+ 4. Where results land ("form map")
+
+ 
+ | | Form 1040 line
+
+ | Shows
+
+ | Label
+
+ 
+ | Line 11
+
+ | AGI
+
+ | Adjusted gross income
+
+ | Line 12
+
+ | Deduction used
+
+ | Standard or itemized deduction
+
+ | Line 15
+
+ | Taxable income
+
+ | Taxable income
+
+ | Line 16
+
+ | Tax before credits
+
+ | Tax
+
+ | Line 24
+
+ | Total tax
+
+ | Total tax
+
+ 
+
+ 
+
+ Tax math is deliberately separated from form line numbers — line layouts change more often than the underlying law, so they live in their own section.
+
+ 5. Proof it works ("golden tests")
+
+ Worked examples transcribed from official publications — a pack cannot merge unless all of them pass:
+
+ 
+ | | Scenario
+
+ | Expected result
+
+ 
+ | Single filer, $60,000 wages, standard deduction
+
+ | AGI $60,000 → taxable $44,250 → tax $5,071.50
+
+ | Single filer, $25,000 wages
+
+ | Taxable $9,250 → tax $925.00 (fully inside first bracket)
+
+ | Single filer, $10,000 wages
+
+ | Taxable income clamps at $0, tax $0 — never negative
+
+ 
+
+ 
+
+ What this walkthrough proves — and doesn't
+
+ 
+ - ✅ Proves: the shape of OKF is complete enough to express real tax law — inputs, parameters, rules, form mappings, and verifiable tests in one auditable file.
+
+ - ⚠️ Doesn't prove: that a tax professional can author this YAML unaided. That's an open RFC question — the long-term goal is a friendly editing surface over this same canonical format. For now, domain experts review the rendered pack (this page) and flag corrections; engineers handle the YAML encoding.
+
+ 
+
+ Try it yourself: if you file US federal taxes, check the rules and test cases above against the official 2025 instructions. Where are we wrong? That's exactly the feedback this project exists to get.
+
+ 
+ TaxStack is an educational and assistive tool — not tax or financial advice, and not a licensed tax preparer.
+
+ 
+ GitHub ·
+ Home ·
+ India walkthrough ·
+ Source doc
+ 
+
+ Built because understanding your own taxes shouldn't require surrendering your data — or decoding the law alone.
+
+
+---
+
+## India Tax Pack Walkthrough — https://taxstack.github.io/walkthrough-in/
+
+TaxStack
+ 
+ Home
+ US pack
+ GitHub ↗
+ 
+ 
+
+ India Income Tax — Plain-Language Walkthrough
+
+ The same rule pack as examples/okf_sample_in.yaml, explained for people who don't write code. This is the second jurisdiction — it exists to prove OKF isn't US-shaped.
+
+ 
+ ⚠️ Illustrative values. All tax values are illustrative — a real pack is verified against official sources (Income-tax Act, ITR utilities) by domain experts before release.
+ 
+
+ The pack in one sentence
+
+ Indian income tax for a salaried individual, FY 2025-26 — and it encodes the old-vs-new regime choice that every Indian filer faces.
+
+ Why this sample matters
+
+ The US pack proves OKF handles brackets and deductions. The India pack proves something harder: a regime choice. India doesn't have one tax schedule — it has two (old vs new), and the "right" answer depends on your deductions. In code-encoded tax apps this gets hard-coded into if/else spaghetti. In OKF it's just parameters keyed by regime plus rules — see §3.
+
+ 1. What we ask the taxpayer
+
+ 
+ | | Question
+
+ | Type
+
+ | Notes
+
+ 
+ | Salary income
+
+ | Money
+
+ | From Form 16 / AIS
+
+ | Other income
+
+ | Money
+
+ | Interest, dividends — one bucket in this sample
+
+ | Regime: new or old?
+
+ | Choice
+
+ | The defining question of Indian filing
+
+ | 80C-family deductions (PPF, insurance, tuition…)
+
+ | Money
+
+ | Only usable in the old regime
+
+ 
+
+ 
+
+ 2. The numbers the law sets
+
+ Standard deduction: ₹75,000 (new regime) vs ₹50,000 (old regime) — one parameter, two values, selected by regime.
+
+ Slabs (new regime FY 2025-26, illustrative)
+
+ 
+ | | Income up to
+
+ | Rate
+
+ 
+ | ₹4,00,000
+
+ | Nil
+
+ | ₹8,00,000
+
+ | 5%
+
+ | ₹12,00,000
+
+ | 10%
+
+ | ₹16,00,000
+
+ | 15%
+
+ | ₹20,00,000
+
+ | 20%
+
+ | Above
+
+ | 30%
+
+ 
+
+ 
+
+ Old regime keeps its own slab table in the same file. Plus: 4% Health & Education Cess, ₹1,50,000 cap on 80C deductions, and a flag for whether 80C applies per regime.
+
+ 3. The computation — in plain English
+
+ 
+ | | #
+
+ | Rule
+
+ | What it means
+
+ 
+ | 1
+
+ | Gross total income = salary + other income
+
+ | 
+
+ | 2
+
+ | Standard deduction = the amount for your chosen regime
+
+ | 
+
+ | 3
+
+ | 80C deductions = min(what you entered, ₹1,50,000 cap)
+
+ | 
+
+ | 4
+
+ | Taxable income = income − standard deduction − (80C only if old regime)
+
+ | The engine multiplies capped 80C by a 0-or-1 regime flag — no special "if" needed
+
+ | 5
+
+ | Tax = progressive slabs for your regime
+
+ | 
+
+ | 6
+
+ | Cess = 4% of tax
+
+ | 
+
+ | 7
+
+ | Total = tax + cess
+
+ | 
+
+ 
+
+ 
+
+ 4. Where results land — ITR-1 (Sahaj)
+
+ Salary → Gross Total Income → Standard deduction → 80C deductions → Taxable Income → Tax → Cess → Total Payable.
+
+ 5. Proof it works — golden tests
+
+ 
+ | | Scenario
+
+ | Result
+
+ 
+ | New regime, ₹20,00,000 salary
+
+ | Taxable ₹19,25,000 → tax ₹18,50,000 → +cess → ₹19,24,000
+
+ | Old regime, ₹10,00,000 salary, ₹2,00,000 deductions entered
+
+ | 80C capped at ₹1,50,000 → taxable ₹8,00,000 → ₹75,400 total
+
+ | New regime, ₹12,00,000 salary with 80C entered
+
+ | 80C contributes zero → taxable ₹11,25,000 → ₹54,600
+
+ 
+
+ 
+
+ That third test is the interesting one — it proves the regime boundary is enforced by the data, not by a special case in code.
+
+ The honest gap this sample exposes
+
+ Section 87A rebate is not modeled. Under the new regime, taxable income ≤ ₹12,00,000 gets a rebate up to ₹60,000 — which would zero out tax for many low-income filers. Expressing it needs a conditional the current OKF builtins don't have. The pack says so explicitly rather than hiding it — this is exactly the kind of edge case RFC question #1 (expression language) exists to resolve.
+
+ For Indian tax professionals: check the slabs, the cess, the 80C cap, and the regime mechanics against the actual Finance Act 2025 and ITR utility behavior. Where are we wrong? That's the contribution this project runs on.
+
+ 
+ TaxStack is an educational and assistive tool — not tax or financial advice, and not a licensed tax preparer.
+
+ 
+ GitHub ·
+ Home ·
+ US walkthrough ·
+ Source doc
+ 
+
+ Built because understanding your own taxes shouldn't require surrendering your data — or decoding the law alone.

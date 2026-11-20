@@ -1,4 +1,13 @@
+# All crawlers — including AI search and answer engines — are welcome.
 User-agent: *
 Allow: /
+
+# AI crawlers explicitly allowed (they also fall under User-agent: * above,
+# listed here to document intent for generative engine visibility):
+#   GPTBot, OAI-SearchBot, ChatGPT-User      (OpenAI)
+#   ClaudeBot, Claude-SearchBot, Claude-User (Anthropic)
+#   PerplexityBot, Perplexity-User           (Perplexity)
+#   Google-Extended                           (Gemini / AI Overviews training opt-out)
+#   Bingbot                                   (powers Copilot)
 
 Sitemap: https://taxstack.github.io/sitemap.xml
